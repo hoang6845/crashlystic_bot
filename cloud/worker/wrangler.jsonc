@@ -10,7 +10,7 @@
 		"GITHUB_REF": "main",
 		"SLACK_TEAM_ID": "T08K37R1404",
 		"SLACK_ALLOWED_USER_IDS": "*",
-		"MAX_MANUAL_REPORTS_PER_DAY": "5",
+		"MAX_MANUAL_REPORTS_PER_DAY": "10",
 		"CLOUD_REPORT_ENABLED": "true"
 	},
 	"d1_databases": [
