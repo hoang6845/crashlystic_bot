@@ -1,0 +1,8 @@
+.env
+node_modules/
+credentials/
+browser-profile/
+.runtime/
+*.log
+.dev.vars
+.wrangler/

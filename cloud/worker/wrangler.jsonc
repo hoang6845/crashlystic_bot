@@ -1,0 +1,23 @@
+﻿{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "crashlytics-slack",
+  "main": "src/index.js",
+  "compatibility_date": "2026-10-07",
+  "workers_dev": true,
+  "vars": {
+    "GITHUB_OWNER": "YOUR_GITHUB_OWNER",
+    "GITHUB_REPO": "YOUR_PRIVATE_REPO",
+    "GITHUB_REF": "main",
+    "SLACK_TEAM_ID": "YOUR_SLACK_TEAM_ID",
+    "SLACK_ALLOWED_USER_IDS": "YOUR_SLACK_USER_ID",
+    "MAX_MANUAL_REPORTS_PER_DAY": "2",
+    "CLOUD_REPORT_ENABLED": "false"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "crashlytics-requests",
+      "database_id": "00000000-0000-0000-0000-000000000000"
+    }
+  ]
+}
