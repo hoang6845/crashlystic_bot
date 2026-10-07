@@ -1,0 +1,54 @@
+version: "3.9"
+
+services:
+  crash-monitor:
+    build: .
+    container_name: crash-monitor
+    restart: unless-stopped
+
+    environment:
+      - SPREADSHEET_ID=${SPREADSHEET_ID}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - GOOGLE_CREDENTIALS_FILE=/app/credentials/service-account.json
+      - TZ=Asia/Ho_Chi_Minh
+
+    volumes:
+      - ./browser-profile:/app/browser-profile
+      - ./logs:/app/logs
+      - ./credentials:/app/credentials:ro
+      - ./config.yaml:/app/config.yaml:ro
+
+    user: "1000:1000"
+
+    security_opt:
+      - seccomp:unconfined
+    shm_size: "2gb"
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  crash-monitor-run-now:
+    build: .
+    container_name: crash-monitor-run-now
+    profiles: ["manual"]
+    
+    environment:
+      - SPREADSHEET_ID=${SPREADSHEET_ID}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - GOOGLE_CREDENTIALS_FILE=/app/credentials/service-account.json
+      - TZ=Asia/Ho_Chi_Minh
+
+    volumes:
+      - ./browser-profile:/app/browser-profile
+      - ./logs:/app/logs
+      - ./credentials:/app/credentials:ro
+      - ./config.yaml:/app/config.yaml:ro
+
+    security_opt:
+      - seccomp:unconfined
+    shm_size: "2gb"
+
+    command: ["--config", "/app/config.yaml", "--run-now"]
