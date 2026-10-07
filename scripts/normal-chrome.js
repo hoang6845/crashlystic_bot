@@ -1,5 +1,4 @@
-﻿git diff --cached --stat
-import net from 'node:net';
+﻿import net from 'node:net';
 import { spawn } from 'node:child_process';
 import { setTimeout as delay } from 'node:timers/promises';
 import { chromium } from 'playwright';
