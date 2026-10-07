@@ -32,14 +32,14 @@ const APPS = [
     //     name: 'Draw & Paint',
     //     url: 'https://console.firebase.google.com/project/draw-and-paint-ef72d/crashlytics/app/android:com.draw.drawing.paint.painting.classic.pixel.art/issues?time=24h&state=open&types=crash&tag=all&sort=eventCount'
     // },
-    {
-        name: 'Cross Stitch',
-        url: 'https://console.firebase.google.com/project/cross-stitch---color-by-number/crashlytics/app/android:com.draw.drawing.cross.stitch.color.coloring.by.number/issues?state=open&time=24h&types=crash&tag=all&sort=eventCount'
-    },
-    {
-        name: 'Diamond Painting',
-        url: 'https://console.firebase.google.com/project/diamond-painting-79873/crashlytics/app/android:com.diamond.painting.art.craft.color.coloring.by.number/issues?state=open&time=24h&types=crash&tag=all&sort=eventCount'
-    },
+    // {
+    //     name: 'Cross Stitch',
+    //     url: 'https://console.firebase.google.com/project/cross-stitch---color-by-number/crashlytics/app/android:com.draw.drawing.cross.stitch.color.coloring.by.number/issues?state=open&time=24h&types=crash&tag=all&sort=eventCount'
+    // },
+    // {
+    //     name: 'Diamond Painting',
+    //     url: 'https://console.firebase.google.com/project/diamond-painting-79873/crashlytics/app/android:com.diamond.painting.art.craft.color.coloring.by.number/issues?state=open&time=24h&types=crash&tag=all&sort=eventCount'
+    // },
     // {
     //     name: 'T-Shirt',
     //     url: 'https://console.firebase.google.com/project/diy-t-shirt-design/crashlytics/app/android:com.diy.design.desining.make.making.tshirt.art.ai/issues?state=open&time=24h&tag=all&sort=eventCount&types=crash'
