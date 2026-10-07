@@ -125,58 +125,58 @@ const APPS = [
         name: 'Cute Keyboard',
         url: 'https://console.firebase.google.com/u/0/project/cute-keyboard-2a90d/crashlytics/app/android:com.emoji.cutekeyboard.themes.fontkeyboard/issues?state=open&time=24h&types=crash&tag=all&sort=eventCount'
     },
-        {
-        name: 'Tattoo',
-        url: 'https://console.firebase.google.com/u/0/project/diy-tattoo-desgin/crashlytics/app/android:com.diy.design.desining.make.making.tattoo.art.ai/issues?state=open&time=24h&types=crash&tag=all&sort=eventCount'
-    },
-      {
-        name: 'Easy Piano',
-        url: 'https://console.firebase.google.com/u/0/project/piano-learn-8976f/crashlytics/app/android:com.piano.keyboard.learnpiano.chords.lessons.songs.app/issues?state=open&time=24h&types=crash&tag=all&sort=eventCount'
-    },
-          {
-        name: 'Live Charge Animation',
-        url: 'https://console.firebase.google.com/u/0/project/live-charge-animation/crashlytics/app/android:com.diy.glow.neon.live.charge.animation.fun.effect/issues?state=open&time=24h&types=crash&tag=all&sort=eventCount'
-    },
-           {
-        name: 'Silly Smile',
-        url: 'https://console.firebase.google.com/u/0/project/silly-wallpaper-b10c9/crashlytics/app/android:com.livewallpaper4K.sillysmile.funky.parallax3d.funnysmile/issues?state=open&time=24h&types=crash&tag=all&sort=eventCount'
-    },
-            {
-        name: 'Wallpaper',
-        url: 'https://console.firebase.google.com/u/0/project/live-wallpaper-e958a/crashlytics/app/android:com.diy.glow.neon.fluid.live.wallpaper.fun.art.magic/issues?state=open&time=24h&types=crash&tag=all&sort=eventCount'
-    },
-               {
-        name: 'RealGuitar',
-        url: 'https://console.firebase.google.com/u/0/project/real-guitar---learn-guitar/crashlytics/app/android:com.realguitar.play.learn.guitar/issues?state=open&time=24h&types=crash&tag=all&sort=eventCount'
-    },
-                {
-        name: 'RealGuitar',
-        url: 'https://console.firebase.google.com/u/0/project/real-guitar---learn-guitar/crashlytics/app/android:com.realguitar.play.learn.guitar/issues?state=open&time=24h&types=crash&tag=all&sort=eventCount'
-    },
-                  {
-        name: 'Mechanical Keyboard',
-        url: 'https://console.firebase.google.com/u/0/project/mechanical-keyboard-e77e7/crashlytics/app/android:com.diy.rgb.led.mechanical.keyboard.custom.keyboard.game.keyboard/issues?state=open&time=24h&types=crash&tag=all&sort=eventCount'
-    },
-                      {
-        name: 'Pets On Screen',
-        url: 'https://console.firebase.google.com/u/0/project/pets-on-screen/crashlytics/app/android:com.pets.on.screens.virtual.desktop.pet/issues?state=open&time=24h&types=crash&tag=all&sort=eventCount'
-    },
-                         {
-        name: 'Glow Dots Art',
-        url: 'https://console.firebase.google.com/u/0/project/glow-dots-art/crashlytics/app/android:com.draw.drawing.glow.dot.art/issues?state=open&time=24h&types=crash&tag=all&sort=eventCount'
-    },
-                             {
-        name: 'AI Jisaw',
-        url: 'https://console.firebase.google.com/u/0/project/ai-jigsaw---classic-and-pixel/crashlytics/app/android:com.ai.jigsaw.puzzle.game.classic.pixel.art/issues?state=open&time=24h&types=crash&tag=all&sort=eventCount'
-    },
-                               {
-        name: 'Animation Maker',
-        url: 'https://console.firebase.google.com/u/0/project/animation-maker-cartoon-studio/crashlytics/app/android:com.draw.drawing.paint.painting.animation.maker.cartoon.studio/issues?state=open&time=24h&types=crash&tag=all&sort=eventCount'
-    },
-                                 {
-        name: 'Prank Sound',
-        url: 'https://console.firebase.google.com/u/0/project/prankapp--funny-prank-sound-fx/crashlytics/app/android:com.prank.app.funny.sound.fx/issues?state=open&time=24h&types=crash&tag=all&sort=eventCount'
-    },
+    //     {
+    //     name: 'Tattoo',
+    //     url: 'https://console.firebase.google.com/u/0/project/diy-tattoo-desgin/crashlytics/app/android:com.diy.design.desining.make.making.tattoo.art.ai/issues?state=open&time=24h&types=crash&tag=all&sort=eventCount'
+    // },
+    //   {
+    //     name: 'Easy Piano',
+    //     url: 'https://console.firebase.google.com/u/0/project/piano-learn-8976f/crashlytics/app/android:com.piano.keyboard.learnpiano.chords.lessons.songs.app/issues?state=open&time=24h&types=crash&tag=all&sort=eventCount'
+    // },
+    //       {
+    //     name: 'Live Charge Animation',
+    //     url: 'https://console.firebase.google.com/u/0/project/live-charge-animation/crashlytics/app/android:com.diy.glow.neon.live.charge.animation.fun.effect/issues?state=open&time=24h&types=crash&tag=all&sort=eventCount'
+    // },
+    //        {
+    //     name: 'Silly Smile',
+    //     url: 'https://console.firebase.google.com/u/0/project/silly-wallpaper-b10c9/crashlytics/app/android:com.livewallpaper4K.sillysmile.funky.parallax3d.funnysmile/issues?state=open&time=24h&types=crash&tag=all&sort=eventCount'
+    // },
+    //         {
+    //     name: 'Wallpaper',
+    //     url: 'https://console.firebase.google.com/u/0/project/live-wallpaper-e958a/crashlytics/app/android:com.diy.glow.neon.fluid.live.wallpaper.fun.art.magic/issues?state=open&time=24h&types=crash&tag=all&sort=eventCount'
+    // },
+    //            {
+    //     name: 'RealGuitar',
+    //     url: 'https://console.firebase.google.com/u/0/project/real-guitar---learn-guitar/crashlytics/app/android:com.realguitar.play.learn.guitar/issues?state=open&time=24h&types=crash&tag=all&sort=eventCount'
+    // },
+    //             {
+    //     name: 'RealGuitar',
+    //     url: 'https://console.firebase.google.com/u/0/project/real-guitar---learn-guitar/crashlytics/app/android:com.realguitar.play.learn.guitar/issues?state=open&time=24h&types=crash&tag=all&sort=eventCount'
+    // },
+    //               {
+    //     name: 'Mechanical Keyboard',
+    //     url: 'https://console.firebase.google.com/u/0/project/mechanical-keyboard-e77e7/crashlytics/app/android:com.diy.rgb.led.mechanical.keyboard.custom.keyboard.game.keyboard/issues?state=open&time=24h&types=crash&tag=all&sort=eventCount'
+    // },
+    //                   {
+    //     name: 'Pets On Screen',
+    //     url: 'https://console.firebase.google.com/u/0/project/pets-on-screen/crashlytics/app/android:com.pets.on.screens.virtual.desktop.pet/issues?state=open&time=24h&types=crash&tag=all&sort=eventCount'
+    // },
+    //                      {
+    //     name: 'Glow Dots Art',
+    //     url: 'https://console.firebase.google.com/u/0/project/glow-dots-art/crashlytics/app/android:com.draw.drawing.glow.dot.art/issues?state=open&time=24h&types=crash&tag=all&sort=eventCount'
+    // },
+    //                          {
+    //     name: 'AI Jisaw',
+    //     url: 'https://console.firebase.google.com/u/0/project/ai-jigsaw---classic-and-pixel/crashlytics/app/android:com.ai.jigsaw.puzzle.game.classic.pixel.art/issues?state=open&time=24h&types=crash&tag=all&sort=eventCount'
+    // },
+    //                            {
+    //     name: 'Animation Maker',
+    //     url: 'https://console.firebase.google.com/u/0/project/animation-maker-cartoon-studio/crashlytics/app/android:com.draw.drawing.paint.painting.animation.maker.cartoon.studio/issues?state=open&time=24h&types=crash&tag=all&sort=eventCount'
+    // },
+    //                              {
+    //     name: 'Prank Sound',
+    //     url: 'https://console.firebase.google.com/u/0/project/prankapp--funny-prank-sound-fx/crashlytics/app/android:com.prank.app.funny.sound.fx/issues?state=open&time=24h&types=crash&tag=all&sort=eventCount'
+    // }
 ];
 
 async function scrapeFirebase(page, appName, url) {
