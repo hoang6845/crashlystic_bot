@@ -1,23 +1,23 @@
-﻿{
-  "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "crashlytics-slack",
-  "main": "src/index.js",
-  "compatibility_date": "2026-10-07",
-  "workers_dev": true,
-  "vars": {
-    "GITHUB_OWNER": "YOUR_GITHUB_OWNER",
-    "GITHUB_REPO": "YOUR_PRIVATE_REPO",
-    "GITHUB_REF": "main",
-    "SLACK_TEAM_ID": "YOUR_SLACK_TEAM_ID",
-    "SLACK_ALLOWED_USER_IDS": "YOUR_SLACK_USER_ID",
-    "MAX_MANUAL_REPORTS_PER_DAY": "2",
-    "CLOUD_REPORT_ENABLED": "false"
-  },
-  "d1_databases": [
-    {
-      "binding": "DB",
-      "database_name": "crashlytics-requests",
-      "database_id": "00000000-0000-0000-0000-000000000000"
-    }
-  ]
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "crashlytics-slack",
+	"main": "src/index.js",
+	"compatibility_date": "2026-10-07",
+	"workers_dev": true,
+	"vars": {
+		"GITHUB_OWNER": "hoang6845",
+		"GITHUB_REPO": "crashlystic_bot",
+		"GITHUB_REF": "main",
+		"SLACK_TEAM_ID": "T08K37R1404",
+		"SLACK_ALLOWED_USER_IDS": "*",
+		"MAX_MANUAL_REPORTS_PER_DAY": "5",
+		"CLOUD_REPORT_ENABLED": "true"
+	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "crashlytics-requests",
+			"database_id": "926d1d13-5188-4c91-9478-37c437f19194"
+		}
+	]
 }

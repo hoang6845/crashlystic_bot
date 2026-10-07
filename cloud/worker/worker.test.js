@@ -87,3 +87,33 @@ test('response URLs outside Slack are never fetched', async () => {
     await h.invoke(request({ response_url: 'https://attacker.test/commands/steal' }));
     assert.equal(h.calls.length, 1);
 });
+
+test('wildcard allows other members while preserving workspace and signature checks', async () => {
+    for (const allowed of ['*', ' U1, * ']) {
+        const h = harness();
+        h.env.SLACK_ALLOWED_USER_IDS = allowed;
+        await h.invoke(request({ user_id: 'U3', team_id: 'T2' }));
+        assert.equal((await h.invoke(request({ user_id: 'U3' }, { bad: true }))).status, 401);
+        assert.equal((await h.invoke(request({ user_id: 'U3' }, { age: 301 }))).status, 401);
+        assert.equal(h.calls.length, 0);
+        await h.invoke(request({ user_id: 'U3' }));
+        assert.equal(h.calls.filter(call => call.url.startsWith('https://api.github.com')).length, 1);
+    }
+});
+
+test('wildcard preserves command validation, enable flag, retries and shared daily budget', async () => {
+    const h = harness();
+    h.env.SLACK_ALLOWED_USER_IDS = '*';
+    await h.invoke(request({ user_id: 'U3', text: 'extra' }));
+    await h.invoke(request({ user_id: 'U3', command: '/other' }));
+    h.env.CLOUD_REPORT_ENABLED = 'false';
+    await h.invoke(request({ user_id: 'U3' }));
+    assert.equal(h.calls.length, 0);
+    h.env.CLOUD_REPORT_ENABLED = 'true';
+    await h.invoke(request({ user_id: 'U3' }));
+    await h.invoke(request({ user_id: 'U3' }));
+    await h.invoke(request({ user_id: 'U4', trigger_id: 'two' }));
+    await h.invoke(request({ user_id: 'U5', trigger_id: 'three' }));
+    assert.equal(h.calls.filter(call => call.url.startsWith('https://api.github.com')).length, 2);
+    assert.equal(h.rows.size, 2);
+});

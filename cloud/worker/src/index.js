@@ -1,4 +1,4 @@
-﻿function message(text, status = 200) {
+function message(text, status = 200) {
     return Response.json({ response_type: 'ephemeral', text }, { status });
 }
 export async function validSignature(raw, timestamp, signature, secret, now = Date.now()) {
@@ -73,7 +73,7 @@ export function createWorker({ fetcher = fetch, now = Date.now } = {}) {
             }
             const body = new URLSearchParams(raw);
             const allowedUsers = env.SLACK_ALLOWED_USER_IDS.split(',').map(value => value.trim());
-            if (body.get('team_id') !== env.SLACK_TEAM_ID || !allowedUsers.includes(body.get('user_id'))) return message('Bạn chưa được cấp quyền chạy báo cáo.');
+            if (body.get('team_id') !== env.SLACK_TEAM_ID || (!allowedUsers.includes('*') && !allowedUsers.includes(body.get('user_id')))) return message('Bạn chưa được cấp quyền chạy báo cáo.');
             if (body.get('command') !== '/crash-report' || (body.get('text') || '').trim()) return message('Dùng /crash-report để lấy báo cáo ngay.');
             if (env.CLOUD_REPORT_ENABLED !== 'true') return message('Báo cáo cloud đang tắt. Hoàn tất cấu hình rồi bật CLOUD_REPORT_ENABLED.');
             ctx.waitUntil(dispatch(raw, body, env));
