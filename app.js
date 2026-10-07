@@ -1,4 +1,4 @@
-﻿import fs from 'node:fs';
+import fs from 'node:fs';
 import path from 'node:path';
 import net from 'node:net';
 import { spawn } from 'node:child_process';
@@ -51,7 +51,7 @@ async function tick() {
     let job;
     try {
         const env = readEnv();
-        const day = scheduledDay(new Date(), env.REPORT_TIME || '08:30');
+        const day = scheduledDay(new Date(), env.REPORT_TIME || '08:00');
         if (!day) return;
         const state = fs.existsSync(statePath) ? JSON.parse(fs.readFileSync(statePath, 'utf8')) : {};
         if (state.day === day) return;

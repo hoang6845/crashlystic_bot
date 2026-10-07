@@ -46,7 +46,7 @@ git push
 
 Kiểm tra danh sách trước khi commit. Không commit file chứa secrets. Hướng dẫn này không tự thay remote Git hoặc tạo repo. Nếu repo mới chưa có code, cần đưa các file nguồn còn lại của dự án lên repo trước.
 
-Workflow cloud thay workflow cũ, chạy lịch `30 1 * * *` = **08:30 giờ Việt Nam**. Lịch GitHub có thể bắt đầu trễ. Không giữ thêm workflow khác gửi cùng báo cáo.
+Workflow cloud thay workflow cũ, chạy lịch `0 1 * * *` = **08:00 giờ Việt Nam**. Lịch GitHub có thể bắt đầu trễ. Không giữ thêm workflow khác gửi cùng báo cáo.
 
 ## 3. Điền GitHub Actions Secrets và Variables
 

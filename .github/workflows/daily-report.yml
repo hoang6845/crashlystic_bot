@@ -2,8 +2,8 @@ name: Daily Crash Report
 
 on:
   schedule:
-    # 01:30 UTC = 08:30 Vietnam. GitHub may start scheduled jobs late.
-    - cron: '30 1 * * *'
+    # 01:00 UTC = 08:00 Vietnam. GitHub may start scheduled jobs late.
+    - cron: '0 1 * * *'
   workflow_dispatch:
 
 permissions:

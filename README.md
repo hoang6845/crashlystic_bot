@@ -1,6 +1,6 @@
 # Firebase Crashlytics → Google Sheets và Slack
 
-Ứng dụng chạy nền trên Windows, bắt đầu lấy số liệu lúc **08:30 giờ Việt Nam** mỗi ngày. Slack nhận thông báo sau khi lấy dữ liệu và ghi Sheet xong. Nếu mở máy sau 08:30, app chạy bù cho ngày hiện tại. Máy cần bật, có mạng và đăng nhập Windows; app không thể gửi khi máy tắt hoặc ngủ.
+Ứng dụng chạy nền trên Windows, bắt đầu lấy số liệu lúc **08:00 giờ Việt Nam** mỗi ngày. Slack nhận thông báo sau khi lấy dữ liệu và ghi Sheet xong. Nếu mở máy sau 08:00, app chạy bù cho ngày hiện tại. Máy cần bật, có mạng và đăng nhập Windows; app không thể gửi khi máy tắt hoặc ngủ.
 
 ## 1. Cấu hình Google Sheet
 
@@ -10,7 +10,7 @@ File `.env` đã có sẵn:
 SPREADSHEET_ID=1H38pYnwbn07z8ysCYBoWL7AxU3--q9fFMIAemX4v0vo
 SHEET_NAME=crashlystic
 SLACK_WEBHOOK_URL=
-REPORT_TIME=08:30
+REPORT_TIME=08:00
 ```
 
 1. Mở [Google Cloud Console](https://console.cloud.google.com/), chọn hoặc tạo project.
@@ -73,7 +73,7 @@ Dùng chính Slack app đã tạo ở bước 2. Webhook gửi báo cáo; Socket
 
 App phản hồi riêng ngay khi nhận yêu cầu, sau đó lấy số liệu, ghi Sheet và gửi báo cáo vào **kênh gắn với webhook**, dù bạn gọi lệnh ở kênh khác. Nếu có báo cáo đang chạy (theo lịch hoặc theo lệnh), yêu cầu mới bị từ chối để tránh dùng chung Chrome profile. Yêu cầu Slack gửi lại với cùng trigger ID trong một giờ không chạy lại trong cùng tiến trình.
 
-Lệnh thủ công không đánh dấu đã chạy lịch hôm nay, nên lịch 08:30 vẫn có thể gửi thêm báo cáo. Không chạy `npm run report` đồng thời với app nền: lệnh terminal riêng không dùng khóa của app nền. Thông báo hoàn tất riêng sử dụng response URL của Slack; nếu báo cáo kéo dài quá thời hạn URL (30 phút), kiểm tra báo cáo trong kênh webhook và log.
+Lệnh thủ công không đánh dấu đã chạy lịch hôm nay, nên lịch 08:00 vẫn có thể gửi thêm báo cáo. Không chạy `npm run report` đồng thời với app nền: lệnh terminal riêng không dùng khóa của app nền. Thông báo hoàn tất riêng sử dụng response URL của Slack; nếu báo cáo kéo dài quá thời hạn URL (30 phút), kiểm tra báo cáo trong kênh webhook và log.
 
 Máy phải bật, có mạng, không ngủ và app phải đang chạy. Nếu thiếu `SLACK_APP_TOKEN`, lịch hằng ngày vẫn hoạt động nhưng không nhận lệnh. Kiểm tra `run-report.log` có dòng **Slack Socket Mode connected.**; nếu không có, kiểm tra token, Socket Mode, quyền cài app và khởi động lại. Code không tự sửa cấu hình Slack trên workspace.
 
@@ -98,7 +98,7 @@ Sau khi điền webhook và cấu hình quyền Sheet:
 npm run report
 ```
 
-Lệnh này thực sự ghi Sheet và gửi Slack. Nó là chạy thủ công, không đánh dấu đã chạy lịch hôm nay; nếu sau đó khởi động app nền sau 08:30, app có thể gửi thêm một báo cáo theo lịch.
+Lệnh này thực sự ghi Sheet và gửi Slack. Nó là chạy thủ công, không đánh dấu đã chạy lịch hôm nay; nếu sau đó khởi động app nền sau 08:00, app có thể gửi thêm một báo cáo theo lịch.
 
 ## 4. Tự khởi động cùng Windows
 
