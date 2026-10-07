@@ -124,6 +124,10 @@ const APPS = [
     {
         name: 'Cute Keyboard',
         url: 'https://console.firebase.google.com/u/0/project/cute-keyboard-2a90d/crashlytics/app/android:com.emoji.cutekeyboard.themes.fontkeyboard/issues?state=open&time=24h&types=crash&tag=all&sort=eventCount'
+    },
+        {
+        name: 'Tattoo',
+        url: 'https://console.firebase.google.com/u/0/project/diy-tattoo-desgin/crashlytics/app/android:com.diy.design.desining.make.making.tattoo.art.ai/issues?state=open&time=24h&types=crash&tag=all&sort=eventCount'
     }
 ];
 
