@@ -59,7 +59,7 @@ Tab **Secrets**, tạo:
 | `FIREBASE_SESSION_KEY` | Nội dung `.runtime/cloud-session-key.txt` |
 | `GOOGLE_CREDENTIALS_JSON` | Toàn bộ JSON service account của Google Sheets |
 | `SPREADSHEET_ID` | ID Sheet đích |
-| `SLACK_WEBHOOK_URL` | Incoming webhook URL của kênh báo cáo |
+| `SLACK_WEBHOOK_URL` | URL lấy từ Slack Incoming Webhooks; xem mục 3.1 bên dưới |
 
 Sheet phải được share với `client_email` trong Google JSON, quyền Editor.
 
@@ -71,6 +71,23 @@ Tab **Variables**, tạo:
 | `SHEET_NAME` | `crashlystic` hoặc tên tab của bạn |
 
 Workflow chưa chạy khi `CLOUD_REPORT_ENABLED` không bằng `true`. Hãy thêm secrets trước khi bật biến này.
+
+### 3.1. Tạo Slack Incoming Webhook và lấy `SLACK_WEBHOOK_URL`
+
+1. Mở [Slack Apps](https://api.slack.com/apps), đăng nhập workspace sẽ nhận báo cáo. Nếu đã có app **Crashlytics Daily** dùng cho bản local, mở app đó; nếu chưa có, chọn **Create New App**, chọn cách tạo app trống (không dùng manifest), đặt tên **Crashlytics Daily** và chọn workspace.
+2. Trong trang cấu hình app, vào **Incoming Webhooks**, bật **Activate Incoming Webhooks**.
+3. Bấm **Add New Webhook to Workspace**, chọn kênh nhận báo cáo (ví dụ `#crash-reports`), rồi bấm **Allow**. Nếu chọn kênh private, tài khoản đang cài app phải là thành viên kênh đó. Nếu workspace yêu cầu phê duyệt app, nhờ quản trị viên phê duyệt trước.
+4. Quay lại **Incoming Webhooks**, trong bảng **Webhook URLs for Your Workspace**, bấm **Copy** ở dòng kênh vừa chọn. URL có dạng `https://hooks.slack.com/services/...`; sao chép toàn bộ URL.
+5. Mở repo GitHub → **Settings → Secrets and variables → Actions → Secrets → New repository secret**. Điền **Name** là `SLACK_WEBHOOK_URL`, dán URL vào **Secret**, rồi bấm **Add secret**. Nếu secret đã có, bấm sửa để cập nhật giá trị.
+6. Sau khi điền đủ các secrets còn lại và bật variable `CLOUD_REPORT_ENABLED=true`, chạy workflow theo bước 4 bên dưới. Báo cáo sẽ được gửi vào kênh gắn với webhook.
+
+Nếu đã có webhook hoạt động trên máy, có thể dùng lại giá trị `SLACK_WEBHOOK_URL` trong `.env` và bắt đầu từ bước 5. File `.env` trên máy không tự được chuyển lên GitHub Actions, nên vẫn phải tạo repository secret.
+
+Webhook gắn với kênh đã chọn. Muốn đổi kênh, tạo webhook mới rồi cập nhật secret `SLACK_WEBHOOK_URL`. Giữ URL trong secret, không commit vào Git hay gửi vào chat.
+
+Chỉ nhận báo cáo hằng ngày thì hoàn tất phần Incoming Webhooks là đủ. Nếu muốn gõ `/crash-report` khi máy tắt, làm tiếp phần Cloudflare Worker và Slack command ở các bước 5–8.
+
+Hướng dẫn chính thức: [Slack Incoming Webhooks](https://docs.slack.dev/messaging/sending-messages-using-incoming-webhooks/).
 
 ## 4. Chạy thử GitHub trước
 

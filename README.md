@@ -30,7 +30,7 @@ Hướng dẫn chính thức: [Tạo service account key](https://docs.cloud.goo
 2. Đặt tên, ví dụ **Crashlytics Daily**, chọn workspace.
 3. Vào **Incoming Webhooks**, bật **Activate Incoming Webhooks**.
 4. Bấm **Add New Webhook to Workspace**, chọn kênh nhận báo cáo, rồi **Allow**. Với kênh private, tài khoản cài app phải là thành viên kênh đó.
-5. Sao chép webhook URL vào `SLACK_WEBHOOK_URL` trong `.env` trên máy. Không cần gửi URL hay JSON key vào chat.
+5. Trong bảng **Webhook URLs for Your Workspace**, bấm **Copy** ở dòng kênh vừa chọn. Sao chép toàn bộ URL dạng `https://hooks.slack.com/services/...` vào `SLACK_WEBHOOK_URL` trong `.env` trên máy. Nếu chạy GitHub Actions, tạo repository secret cùng tên theo [mục 3.1 của hướng dẫn cloud](cloud/README.md#31-tạo-slack-incoming-webhook-và-lấy-slack_webhook_url). Không gửi URL hay JSON key vào chat.
 
 Webhook gắn với kênh đã chọn. Đổi kênh bằng cách tạo webhook mới và cập nhật `.env`. Nếu workspace yêu cầu phê duyệt app, nhờ quản trị viên phê duyệt.
 
