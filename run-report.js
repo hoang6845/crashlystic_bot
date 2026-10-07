@@ -6,6 +6,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import chalk from 'chalk';
 import * as dotenv from 'dotenv';
+import { writeTrackingSheet, TRACKING_SPREADSHEET_ID, TRACKING_SHEET_ID } from './scripts/tracking-sheet.js';
 
 
 
@@ -122,7 +123,7 @@ const APPS = [
     // }
     {
         name: 'Cute Keyboard',
-        url: 'https://console.firebase.google.com/u/0/project/cute-keyboard-2a90d/crashlytics/app/android:com.emoji.cutekeyboard.themes.fontkeyboard/issues?time=24h&state=open&types=crash&tag=all&sort=eventCount&versions=1.6.1%20(134);1.6.0%20(131)'
+        url: 'https://console.firebase.google.com/u/0/project/cute-keyboard-2a90d/crashlytics/app/android:com.emoji.cutekeyboard.themes.fontkeyboard/issues?state=open&time=24h&types=crash&tag=all&sort=eventCount'
     }
 ];
 
@@ -184,6 +185,17 @@ async function scrapeFirebase(page, appName, url) {
     console.log(chalk.green(`[${appName}] Users: ${data.crashFreeUsers} | Sessions: ${data.crashFreeSessions}`));
     if (data.crashFreeUsers === 'N/A' || data.crashFreeSessions === 'N/A') throw new Error('Missing Crashlytics metrics; check Firebase login.');
     return data;
+}
+
+async function writeSecondaryReport(results, serviceAccountAuth, dateStr) {
+    const spreadsheetId = process.env.TRACKING_SPREADSHEET_ID || TRACKING_SPREADSHEET_ID;
+    const tabId = Number(process.env.TRACKING_SHEET_ID || TRACKING_SHEET_ID);
+    const doc = new GoogleSpreadsheet(spreadsheetId, serviceAccountAuth);
+    await doc.loadInfo();
+    const sheet = doc.sheetsById[tabId];
+    if (!sheet) throw new Error('Tracking tab not found: ' + tabId);
+    const plan = await writeTrackingSheet(sheet, results, dateStr);
+    console.log(chalk.cyan(`Crash-Free Users written to "${sheet.title}": ${plan.updates.length} apps for ${dateStr}${plan.createColumn ? ' (new date column)' : ''}.`));
 }
 
 async function main() {
@@ -393,6 +405,8 @@ async function main() {
         } catch (e) {
             // Already merged or error
         }
+
+        await writeSecondaryReport(results, serviceAccountAuth, todayStr);
 
         console.log(chalk.bgGreen.white.bold('\n === COMPLETED ALL GOOGLE SHEET OPERATIONS! === \n'));
 

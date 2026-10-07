@@ -89,6 +89,12 @@ Chỉ nhận báo cáo hằng ngày thì hoàn tất phần Incoming Webhooks l�
 
 Hướng dẫn chính thức: [Slack Incoming Webhooks](https://docs.slack.dev/messaging/sending-messages-using-incoming-webhooks/).
 
+### 3.2. Ghi thêm vào Sheet Crash-free Tracking
+
+Workflow đã có đích mặc định là Sheet `1uz7VkvtZwHjk16luXoW66olcMtSZmG-Vp45xRimaOYU`, tab `gid=555656315`. Share Sheet mới cho `client_email` trong `GOOGLE_CREDENTIALS_JSON` với quyền **Editor**, đồng thời giữ cấu hình Sheet cũ.
+
+Mỗi lần chạy tự tìm app ở cột B và ngày đầy đủ ở hàng 2, ghi Crash-Free Users vào ô có sẵn; chỉ chèn cột ngày khi chưa có. Xem [chi tiết bố cục và cách đổi đích](../README.md#ghi-thêm-vào-sheet-crash-free-tracking). Không cần thêm secret cho Sheet mới; có thể đổi đích bằng GitHub Variables `TRACKING_SPREADSHEET_ID` và `TRACKING_SHEET_ID`.
+
 ## 4. Chạy thử GitHub trước
 
 Trong **Actions → Daily Crash Report → Run workflow**, chọn default branch và chạy. Lần này thực sự lấy số liệu, ghi Sheet và gửi Slack.
@@ -120,7 +126,7 @@ Lệnh cuối tạo database D1. Sao chép `database_id` được trả về và
 | `GITHUB_REPO` | Chỉ tên repo, không có URL hoặc owner |
 | `GITHUB_REF` | Default branch chứa code và workflow, ví dụ `main` |
 | `SLACK_TEAM_ID` | ID workspace, dạng `T...`, thường thấy trong URL `app.slack.com/client/T...` |
-| `SLACK_ALLOWED_USER_IDS` | ID thành viên được phép dùng lệnh, phân cách bằng dấu phẩy |
+| `SLACK_ALLOWED_USER_IDS` | ID thành viên được phép dùng lệnh, phân cách bằng dấu phẩy; đặt `*` để cho phép mọi thành viên trong workspace `SLACK_TEAM_ID` |
 | `MAX_MANUAL_REPORTS_PER_DAY` | Mặc định `2`, tính theo ngày UTC |
 | `CLOUD_REPORT_ENABLED` | Đổi thành `true` sau khi GitHub chạy thử thành công |
 
@@ -215,3 +221,7 @@ npx wrangler d1 execute crashlytics-requests --local --file=schema.sql
 Các kiểm thử không gửi Slack hay truy cập Firebase. `npm run check` chỉ bundle dry-run, không deploy. Cần cấu hình tài khoản và chạy thử thật để xác nhận Google chấp nhận phiên cloud.
 
 Tài liệu chính thức: [GitHub Actions billing](https://docs.github.com/en/billing/concepts/product-billing/github-actions), [Workflow dispatch](https://docs.github.com/en/rest/actions/workflows#create-a-workflow-dispatch-event), [Workers pricing](https://developers.cloudflare.com/workers/platform/pricing/), [D1 pricing](https://developers.cloudflare.com/d1/platform/pricing/), [Slack request signing](https://docs.slack.dev/authentication/verifying-requests-from-slack/), [Playwright authentication](https://playwright.dev/docs/auth).
+
+
+cd C:\go-tools-browser-crawl-ahido\cloud\worker
+npm run deploy

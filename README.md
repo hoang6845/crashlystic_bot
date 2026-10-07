@@ -24,6 +24,27 @@ REPORT_TIME=08:30
 
 Hướng dẫn chính thức: [Tạo service account key](https://docs.cloud.google.com/iam/docs/keys-create-delete).
 
+### Ghi thêm vào Sheet Crash-free Tracking
+
+Mỗi lần báo cáo sẽ ghi thêm **Crash-Free Users** vào [tab Crash-free Tracking](https://docs.google.com/spreadsheets/d/1uz7VkvtZwHjk16luXoW66olcMtSZmG-Vp45xRimaOYU/edit#gid=555656315), bên cạnh Sheet báo cáo hiện tại.
+
+- Tên app được đối chiếu với cột **B**, bỏ qua khoảng trắng và khác biệt chữ hoa/thường; `Cute Keyboard` khớp với `CuteKeyboard`. App Android không khớp với dòng có tiền tố `[iOS]`.
+- Ngày được đối chiếu với hàng **2**, từ cột **F**, theo ngày/tháng/**năm** và ngày báo cáo tại Việt Nam. Header hiện là ngày thật của Google Sheets dù chỉ hiển thị `dd/mm`.
+- Nếu đã có ngày, chỉ cập nhật ô của app tại cột đó. Nếu chưa có, chèn một cột đúng thứ tự ngày và sao chép định dạng từ cột ngày bên cạnh. Không dùng lại cột trống phân cách tháng.
+- Giá trị được lưu dạng số phần trăm: `99.58%` là `0.9958`, hiển thị hai chữ số thập phân. Chỉ ghi Crash-Free Users, giữ các dòng app khác và thông tin Dev/Squad/SDK.
+- Nếu app không có dòng khớp, có nhiều dòng cùng tên hoặc ô đích có công thức, báo cáo báo lỗi để bạn kiểm tra bố cục. Chương trình không tự thêm dòng app.
+
+Share Sheet này với `client_email` của **cùng service account** đang dùng cho báo cáo, quyền **Editor**. Không cần tạo service account mới.
+
+ID Sheet và tab đã được cấu hình mặc định. Nếu cần thay đích, dùng `TRACKING_SPREADSHEET_ID` và `TRACKING_SHEET_ID` trong `.env` khi chạy local, hoặc GitHub Actions **Variables** khi chạy cloud:
+
+```dotenv
+TRACKING_SPREADSHEET_ID=1uz7VkvtZwHjk16luXoW66olcMtSZmG-Vp45xRimaOYU
+TRACKING_SHEET_ID=555656315
+```
+
+Sau khi cập nhật code lên GitHub, cả lịch daily và lệnh `/crash-report` đều ghi vào hai Sheet. Giữ `SPREADSHEET_ID` và `SHEET_NAME` của Sheet báo cáo cũ.
+
 ## 2. Tạo bot thông báo Slack
 
 1. Mở [Slack Apps](https://api.slack.com/apps) → **Create New App → Blank app → Continue**.

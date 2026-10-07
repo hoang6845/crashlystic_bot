@@ -1,4 +1,4 @@
-﻿name: Daily Crash Report
+name: Daily Crash Report
 
 on:
   schedule:
@@ -23,6 +23,8 @@ jobs:
       SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
       SHEET_NAME: ${{ vars.SHEET_NAME || 'crashlystic' }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      TRACKING_SPREADSHEET_ID: ${{ vars.TRACKING_SPREADSHEET_ID || '1uz7VkvtZwHjk16luXoW66olcMtSZmG-Vp45xRimaOYU' }}
+      TRACKING_SHEET_ID: ${{ vars.TRACKING_SHEET_ID || '555656315' }}
       FIREBASE_STORAGE_STATE: credentials/firebase-state.json
     steps:
       - uses: actions/checkout@v4
