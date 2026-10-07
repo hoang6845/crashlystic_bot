@@ -196,6 +196,7 @@ async function writeSecondaryReport(results, serviceAccountAuth, dateStr) {
     if (!sheet) throw new Error('Tracking tab not found: ' + tabId);
     const plan = await writeTrackingSheet(sheet, results, dateStr);
     console.log(chalk.cyan(`Crash-Free Users written to "${sheet.title}": ${plan.updates.length} apps for ${dateStr}${plan.createColumn ? ' (new date column)' : ''}.`));
+    return `https://docs.google.com/spreadsheets/d/${spreadsheetId}/edit#gid=${tabId}&range=${sheet.getCell(1, plan.column).a1Address}`;
 }
 
 async function main() {
@@ -406,7 +407,7 @@ async function main() {
             // Already merged or error
         }
 
-        await writeSecondaryReport(results, serviceAccountAuth, todayStr);
+        const trackingSheetUrl = await writeSecondaryReport(results, serviceAccountAuth, todayStr);
 
         console.log(chalk.bgGreen.white.bold('\n === COMPLETED ALL GOOGLE SHEET OPERATIONS! === \n'));
 
@@ -423,7 +424,7 @@ async function main() {
         const sheetId = sheet.sheetId;
         const sheetUrl = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/edit#gid=${sheetId}&range=${targetColLetter}1`;
 
-        await sendSlackNotification(results, sheetUrl, todayStr);
+        await sendSlackNotification(results, sheetUrl, todayStr, trackingSheetUrl);
 
     } catch (err) {
         console.error(chalk.red('MAIN ERROR WHILE WRITING TO GOOGLE SHEET:'), err.message);
@@ -431,7 +432,7 @@ async function main() {
     }
 }
 
-async function sendSlackNotification(results, sheetUrl, dateStr = reportDate()) {
+async function sendSlackNotification(results, sheetUrl, dateStr = reportDate(), trackingSheetUrl = '') {
     if (!SLACK_WEBHOOK_URL) {
         console.log(chalk.yellow('Skipping Slack notification because SLACK_WEBHOOK_URL is not configured.'));
         return;
@@ -443,6 +444,10 @@ async function sendSlackNotification(results, sheetUrl, dateStr = reportDate()) 
     }
 
     let messageText = `*Firebase Crashlytics Report ${dateStr}*\n` + results.map(r => `${r.app}: Users ${r.crashFreeUsers} | Sessions ${r.crashFreeSessions}`).join('\n');
+
+    if (trackingSheetUrl) {
+        messageText += `\n📊 <${trackingSheetUrl}|View Crash-free Tracking>`;
+    }
 
     if (sheetUrl) {
         messageText += `\n📄 <${sheetUrl}|View Google Sheet>`;
