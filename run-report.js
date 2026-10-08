@@ -149,10 +149,7 @@ const APPS = [
         name: 'RealGuitar',
         url: 'https://console.firebase.google.com/u/0/project/real-guitar---learn-guitar/crashlytics/app/android:com.realguitar.play.learn.guitar/issues?state=open&time=24h&types=crash&tag=all&sort=eventCount'
     },
-                {
-        name: 'RealGuitar',
-        url: 'https://console.firebase.google.com/u/0/project/real-guitar---learn-guitar/crashlytics/app/android:com.realguitar.play.learn.guitar/issues?state=open&time=24h&types=crash&tag=all&sort=eventCount'
-    },
+   
                   {
         name: 'Mechanical Keyboard',
         url: 'https://console.firebase.google.com/u/0/project/mechanical-keyboard-e77e7/crashlytics/app/android:com.diy.rgb.led.mechanical.keyboard.custom.keyboard.game.keyboard/issues?state=open&time=24h&types=crash&tag=all&sort=eventCount'
