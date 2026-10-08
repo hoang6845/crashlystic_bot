@@ -6,3 +6,7 @@ browser-profile/
 *.log
 .dev.vars
 .wrangler/
+
+backups/
+docker/report.env
+run-report.docker.generated.js

@@ -1,0 +1,10 @@
+**
+!package.json
+!package-lock.json
+!run-report.js
+!scripts/
+!scripts/*.js
+!docker/
+!docker/**
+docker/*.env
+docker/*.test.js

@@ -1,0 +1,12 @@
+services:
+  report:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    env_file: report.env
+    volumes:
+      - firebase-profile:/data
+    shm_size: 256mb
+    restart: "no"
+volumes:
+  firebase-profile:
