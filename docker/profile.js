@@ -14,15 +14,19 @@ export async function openDockerProfile(env = process.env, browserType = chromiu
     if (!previous && !encrypted) throw new Error('First run needs FIREBASE_SESSION_ENCRYPTED and FIREBASE_SESSION_KEY. Export a valid session with npm run login:cloud.');
     let seed;
     const latest = path.join(dir, 'latest-session.enc');
+    const profile = path.join(dir, 'browser-profile');
+    // Preserve cookies Chromium may update during shutdown after the snapshot.
+    const hasProfileCookies = ['Default/Cookies', 'Default/Network/Cookies']
+        .some(relative => fs.existsSync(path.join(profile, relative)));
     if (fingerprint && fingerprint !== previous) {
         try { seed = decryptState(encrypted, env.FIREBASE_SESSION_KEY); }
         catch { throw new Error('Cannot decrypt the supplied session. Check FIREBASE_SESSION_KEY and FIREBASE_SESSION_ENCRYPTED.'); }
     }
-    if (!seed && fs.existsSync(latest)) {
+    if (!seed && !hasProfileCookies && fs.existsSync(latest)) {
         try { seed = decryptState(fs.readFileSync(latest, 'utf8'), env.FIREBASE_SESSION_KEY); }
         catch { throw new Error('Cannot restore the updated volume session. Supply the original key or export a new seed session.'); }
     }
-    const context = await browserType.launchPersistentContext(path.join(dir, 'browser-profile'), {
+    const context = await browserType.launchPersistentContext(profile, {
         headless: true,
         args: ['--disable-dev-shm-usage']
     });

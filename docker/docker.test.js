@@ -24,6 +24,17 @@ test('reuses updated persistent profile, reseeds only for a newly supplied sessi
     assert.equal(fs.existsSync(path.join(dir,'seed.sha256')),false);
     await first.validated();
     assert.deepEqual(decryptState(fs.readFileSync(path.join(dir,'latest-session.enc'),'utf8'),key),refreshed);
+    const cookies = path.join(dir, 'browser-profile', 'Default', 'Network', 'Cookies');
+    fs.mkdirSync(path.dirname(cookies), {recursive:true});
+    fs.writeFileSync(cookies, 'newer browser cookies');
+    await openDockerProfile(env,browser);
+    assert.equal(restored,1);
+    assert.equal(fs.readFileSync(cookies, 'utf8'), 'newer browser cookies');
+    // Missing cookie database recovers from the encrypted backup.
+    fs.rmSync(cookies);
+    await openDockerProfile(env,browser);
+    assert.equal(restored,2);
+    fs.writeFileSync(path.join(dir, 'browser-profile', 'Default', 'Cookies'), 'legacy cookies');
     await openDockerProfile(env,browser);
     assert.equal(restored,2);
     env.FIREBASE_SESSION_ENCRYPTED = encryptState(state,key);
