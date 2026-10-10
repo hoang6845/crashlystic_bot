@@ -45,9 +45,9 @@
    Cannot connect daemon: mở Docker Desktop, đợi engine.
    Virtualization disabled: bật virtualization trong BIOS/UEFI.
    Missing file khi make-env: cấu hình local credentials, hoặc npm run login:cloud như trước.
-   Session expired: phiên chuyển sang môi trường mới bị từ chối; Docker không bảo đảm giữ login mãi, chưa có UI đăng nhập trực tiếp trong container.
+   Session expired: kiểm tra Volume vẫn gắn tại /data và có latest-session.enc sau lần check thành công. Khi khởi động lại, app khôi phục cookie phiên còn thiếu từ bản sao mã hóa, giữ nguyên cookie mới hơn trong profile. Không xóa volume để thử sửa lỗi. Nếu Google đã từ chối phiên, cần xuất seed mới bằng npm run login:cloud và cập nhật FIREBASE_SESSION_ENCRYPTED cùng khóa tương ứng. Docker không bảo đảm giữ login mãi, chưa có UI đăng nhập trực tiếp trong container.
    Exit 137/OOM: đo RAM, 512 MB chưa được kiểm chứng.
    Exit 73: container khác đang dùng profile, chờ lượt đó kết thúc.
 
-Kiểm chứng hiện tại: 31 test đạt và source gốc không đổi. Chưa build/chạy container thực tế vì máy chưa có Docker. Không hứa RAM Free đủ hoặc cookie hoạt động trên server.
+Kiểm thử hồi quy Docker bao gồm khôi phục cookie phiên bị mất sau khi đóng Chromium, giữ cookie đã được làm mới và không khôi phục toàn bộ storage khi profile còn tồn tại. Cần chạy check ngay, sau vài giờ và ngày sau trên server để xác nhận phiên thực tế; kiểm thử mô phỏng không chứng minh Google tiếp tục chấp nhận phiên. Không hứa RAM Free đủ hoặc cookie hoạt động trên server.
 

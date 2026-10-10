@@ -50,6 +50,37 @@ test('bad seed cannot launch browser or expose supplied secrets', async t => {
     }), /Cannot decrypt/);
 });
 
+test('restores missing session cookies after restart without replacing refreshed profile cookies', async t => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'docker-session-'));
+    t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
+    const key = randomBytes(32).toString('base64');
+    const env = { DOCKER_DATA_DIR: dir, FIREBASE_SESSION_KEY: key };
+    const cookie = { name: 'session', value: 'saved', domain: '.example.com', path: '/', expires: -1, httpOnly: true, secure: true, sameSite: 'Lax' };
+    fs.writeFileSync(path.join(dir, 'seed.sha256'), 'existing-seed');
+    const db = path.join(dir, 'browser-profile', 'Default', 'Network', 'Cookies');
+    fs.mkdirSync(path.dirname(db), { recursive: true });
+    fs.writeFileSync(db, 'persistent database still exists');
+    fs.writeFileSync(path.join(dir, 'latest-session.enc'), encryptState({ cookies: [cookie, { ...cookie, name: 'persistent', expires: 2000000000 }], origins: [] }, key));
+    let current = [];
+    const added = [];
+    const browser = { async launchPersistentContext() { return {
+        async setStorageState() { assert.fail('must preserve existing profile'); },
+        async cookies() { return current; },
+        async addCookies(cookies) { added.push(...cookies); },
+        async close() {}
+    }; } };
+    await openDockerProfile(env, browser);
+    assert.deepEqual(added, [cookie]);
+    added.length = 0;
+    current = [{ ...cookie, value: 'refreshed' }];
+    await openDockerProfile(env, browser);
+    assert.deepEqual(added, []);
+    assert.equal(current[0].value, 'refreshed');
+    current = [{ ...cookie, path: '/other' }];
+    await openDockerProfile(env, browser);
+    assert.deepEqual(added, [cookie]);
+});
+
 test('Docker keeps app list, retries, output functions, and checks intact', () => {
     const source=fs.readFileSync(new URL('../run-report.js',import.meta.url),'utf8');
     const result=dockerReportSource(source);

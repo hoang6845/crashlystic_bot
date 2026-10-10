@@ -13,6 +13,7 @@ export async function openDockerProfile(env = process.env, browserType = chromiu
     const previous = fs.existsSync(marker) ? fs.readFileSync(marker, 'utf8') : null;
     if (!previous && !encrypted) throw new Error('First run needs FIREBASE_SESSION_ENCRYPTED and FIREBASE_SESSION_KEY. Export a valid session with npm run login:cloud.');
     let seed;
+    let savedSessionCookies = [];
     const latest = path.join(dir, 'latest-session.enc');
     const profile = path.join(dir, 'browser-profile');
     // Preserve cookies Chromium may update during shutdown after the snapshot.
@@ -22,8 +23,12 @@ export async function openDockerProfile(env = process.env, browserType = chromiu
         try { seed = decryptState(encrypted, env.FIREBASE_SESSION_KEY); }
         catch { throw new Error('Cannot decrypt the supplied session. Check FIREBASE_SESSION_KEY and FIREBASE_SESSION_ENCRYPTED.'); }
     }
-    if (!seed && !hasProfileCookies && fs.existsSync(latest)) {
-        try { seed = decryptState(fs.readFileSync(latest, 'utf8'), env.FIREBASE_SESSION_KEY); }
+    if (!seed && fs.existsSync(latest)) {
+        try {
+            const saved = decryptState(fs.readFileSync(latest, 'utf8'), env.FIREBASE_SESSION_KEY);
+            if (!hasProfileCookies) seed = saved;
+            else savedSessionCookies = saved.cookies.filter(cookie => cookie.expires === -1);
+        }
         catch { throw new Error('Cannot restore the updated volume session. Supply the original key or export a new seed session.'); }
     }
     const context = await browserType.launchPersistentContext(profile, {
@@ -32,6 +37,17 @@ export async function openDockerProfile(env = process.env, browserType = chromiu
     });
     try {
         if (seed) await context.setStorageState(seed);
+        else if (savedSessionCookies.length) {
+            // Chromium can discard session cookies on clean shutdown while the
+            // persistent cookie database remains. Restore only missing cookies;
+            // never overwrite values refreshed in the profile after the snapshot.
+            const current = await context.cookies();
+            const missing = savedSessionCookies.filter(saved => !current.some(cookie =>
+                cookie.name === saved.name && cookie.domain === saved.domain &&
+                cookie.path === saved.path &&
+                JSON.stringify(cookie.partitionKey ?? null) === JSON.stringify(saved.partitionKey ?? null)));
+            if (missing.length) await context.addCookies(missing);
+        }
     } catch {
         await context.close();
         throw new Error('Could not restore the login state into the Docker profile.');
